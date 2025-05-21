@@ -8,7 +8,6 @@ Este repositorio documenta el proceso para realizar un análisis dinámico de la
 2. [Obtener InsecureBankv2](#2-obtener-insecurebankv2)  
 3. [Instalar MobSF](#3-instalar-mobsf)  
 4. [Acceder a MobSF](#4-Acceder-a-mobsf)  
-## 3. Acceder a MobSF
 5. [¿Qué es Genymotion?](#5-qué-es-genymotion)  
 6. [Instalar Genymotion](#6-instalar-genymotion)  
 7. [Emular un dispositivo móvil](#7-emular-un-dispositivo-móvil)  
@@ -65,7 +64,7 @@ docker run -it -p 8000:8000 mobsf
 También puedes hacerlo directamente  levantando la imagen de dockerhub:
 
 ```bash
-docker run -it --rm -p 8080:8000 opensecurity/mobile-security-framework-mobsf:latest
+docker run -it --rm -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
 ```
 ![](images/image1.png)
 
@@ -81,9 +80,8 @@ Sigue la guía oficial en: https://mobsf.github.io/docs/#/installation
 
 Una vez iniciado MobSF (ya sea por Docker o manualmente), accede a través de tu navegador:
 
-```
-http://localhost:8000
-```
+>  <http://localhost:8000>
+
 En la pantalla de autenticación usamos el usuario `mobsf` y la contraseña por defecto: `mobsf`.
 
 ![](images/image2.png)
