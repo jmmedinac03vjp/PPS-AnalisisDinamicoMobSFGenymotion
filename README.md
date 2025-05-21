@@ -67,8 +67,9 @@ docker run -it -p 8000:8000 mobsf
 También puedes hacerlo directamente  levantando la imagen de dockerhub:
 
 ```bash
-docker run -it --rm -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
+docker run -it --rm -e MOBSF_ANALYZER_IDENTIFIER=10.0.4.20:5555 -p 8080:8000 opensecurity/mobile-security-framework-mobsf:latest
 ```
+
 ![](images/image1.png)
 
 Como hemos creado un contenedor interactivo, `docker run -it`, el terminal quedará abierto. En él podremos ver
@@ -138,6 +139,18 @@ Una vez instalado en tu equipo lánzalo desde el botón de `inicio` de tu SO.
 Selecciona `Personal use`. Veremos el siguiente aviso:
  
 ![](images/image7.png)
+
+5. Configurar el hypervisor como VirtualBox.
+
+Por defecto el hypervisor que utiliza Genymotion es Quemu. El problema es que internamente crea una red NAT y por lo tanto nos puede dificultar la conexión con `MobSF`.
+
+Para configurar nos vamos al apartado `Hypervisor` y seleccionamos el hipervisor `VirtualBox` en vez de `Quemu`.
+
+![](images/image25.png)
+
+La aplicación se reiniciará y nos aparece la pantalla de la aplicación
+
+![](images/image27.png)
 
 ---
 
@@ -212,10 +225,11 @@ pip2 install web.py
 
 ---
   
-## 8. Emular un dispositivo móvil
+## 8. Emular un dispositivo móvil en Genymotion
 
+1. Arrancamos Genymotion en nuestro Sistema operativo.
 
-1. Crea una nueva máquina virtual Android (preferiblemente Android 5.0 con x86).
+2. Crea una nueva máquina virtual Android (preferiblemente Android 5.0 con x86).
  
 ![](images/image8.png)
 
@@ -232,9 +246,11 @@ En los siguientes pasos podemos dejar todas las opciones tal y como están, salv
 
 ![](images/image11.png)
 
-Al finalizar el proceso y darle a `Install` comenzará la creación del dispositivo. Tarda unos minutos.
+- !!IMPORTANTE¡¡ En la sección de "Hypervisor Options", configuramos la red del dispositivo en modo `Bridge`. Debemos seleccionar también la interfaz que estamos utilizando (wl0 para inalámbrica, en0 para cableada). 
 
-- Iniciar el dispositivo. Darle al símbolo de `play`.
+- Al finalizar el proceso y darle a `Install` comenzará la creación del dispositivo. Tarda unos minutos.
+
+3. Iniciar el dispositivo. Darle al símbolo de `play`.
 
 ![](images/image12.png)
 
@@ -242,14 +258,41 @@ Nos aparece el dispositivo.
 
 ![](images/image13.png)
 
-> 
+### Comprobar conexión con dispositivo.
 
+Para ver si hay conexión con el dispositivo creado:
 
+1. Ver ip del dispositivo virtual. 
+- Entramos en `Settings` o `Ajustes`
 
-2. Asegúrate de que tenga habilitado **ADB**.
-![](images/image8.png)
+![](images/image28.png)
 
-3. Inicia la máquina virtual.
+- Entramos en seccion `WIFI`
+
+![](images/image29.png)
+
+- Le damos a los tres puntos 
+
+![](images/image30.png)
+
+- Y finalmente en `Advanced` o `Avanzado`
+
+![](images/image31.png)
+
+Ya podremos ver los datos de la conexión: 
+
+![](images/image32.png)
+
+2. Probar conexión con ADB.
+
+Para ver si nuestro equipo anfitrión conecta con el dispositivo virtual, desde el terminal de nuestro equipo:
+
+```bash
+adb connect X.X.X.X:5555
+```
+Siendo X.X.X.X la ip de nuestro dispositivo virtual. Si se establece la conexión aparecerá un mesnaje de `conected to X.X.X.X`
+
+![](images/image33.png)
 
 ---
 
@@ -263,14 +306,43 @@ Nos aparece el dispositivo.
 
 ![](images/image15.png)
 
+3. Introducimos el usuario y la contraseña y pulsamos botón de `Login`.
+
+> Estos son los usuarios válidos:
+> - dinesh/Dinesh@123$
+> - jack/Jack@123$
+
+![](images/image20.png)
+
+4. Introducimos dirección Ip del Servidor.
+
+Si lo hemos creado en nuestro equipo tan sólo tenemos que ver la ip de nuestro equipo y ponerla. Por defecto usamos el puerto 8888.
+
+![](images/image21.png)
+
+Después de darle al botón de `Start` accedemos a la aplicación:
+
+![](images/image22.png)
+
+
 ---
 
 ## 10. Análisis dinámico de la aplicación
 
 1. Accede a MobSF en `http://localhost:8000`.
-2. Selecciona la opción **Dynamic Analyzer**.
+
+![](images/image24.png)
+
+2. Arrastramos la apk sobre el emulador.
+
+![](images/image23.png)
+ 
+3. Selecciona la opción **Dynamic Analyzer**.
+
 3. Asegúrate de que MobSF detecta el dispositivo emulado vía ADB.
+
 4. Carga el APK de InsecureBankv2.
+
 5. Sigue las instrucciones para iniciar el análisis dinámico.
 
 > MobSF lanzará la app en el emulador y empezará a registrar comportamiento, tráfico, uso de permisos, etc.
@@ -296,7 +368,7 @@ El informe dinámico incluirá información como:
 - [InsecureBankv2 GitHub](https://github.com/dineshshetty/Android-InsecureBankv2)
 - [Guía de uso de InsecureBankvs desde aquí.](files/InsecureBankv2UsageGuide.pdf)
 - [Manual de uso de Genymotio de Rafa López](files/InstalacionGenymotion.pdf)
-
+- [Tutorial análisis de vulnerabilidades de http://jaymonsecurity.es](https://jaymonsecurity.es/analisis-vulnerabilidades-app-android2/)
 ---
 
 ## ⚠️ Disclaimer
