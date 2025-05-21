@@ -149,13 +149,27 @@ InsecureBankv2 es una aplicación bancaria, por lo tanto tenemos:
 - Aplicación Bancaria **Cliente**. En este caso APK para Android.
 
 En este punto vamos a levantar la aplicación del servidor.
+
 El desarrollador tiene creado un laboratorio en la carpeta `AndroLabServer`. En esencia vamos a:
+
+- Crear un entorno virtual de Phyton para ejecutar el laboratorio.
 - Instalar python (si no lo tienes instalado) y librerias de python.
 - Ejecutar la aplicación.
 
+### Crear entornbo virtual de python
+
 ```bash
 cd AndroLabServer/
-sudo apt install python
+python3 -m venv insecureBank-env
+source insecureBank-env/bin/activate
+```
+Esto nos crea una carpeta con el entorno virtual y entramos en él, como podemos ver en la imagen:
+
+![](images/image17.png)
+
+Instalamos la librerías:
+
+```bash
 pip install -r requirements.txt
 ```
 ![](images/image15.png)
