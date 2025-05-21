@@ -11,9 +11,10 @@ Este repositorio documenta el proceso para realizar un análisis dinámico de la
 5. [¿Qué es Genymotion?](#5-qué-es-genymotion)  
 6. [Instalar Genymotion](#6-instalar-genymotion)  
 7. [Emular un dispositivo móvil](#7-emular-un-dispositivo-móvil)  
-8. [Ejecutar InsecureBankv2 en el emulador](#8-ejecutar-insecurebankv2-en-el-emulador)  
-9. [Análisis dinámico de la aplicación](#9-análisis-dinámico-de-la-aplicación)  
-9.  [Interpretación de los resultados](#10-interpretación-de-los-resultados)
+8. [Ejecutar Back-end InsecureBankv2](#8-ejecutar-back-end-insecurebankv2)  
+8. [Ejecutar InsecureBankv2 en el emulador](#9-ejecutar-insecurebankv2-en-el-emulador)  
+9. [Análisis dinámico de la aplicación](#10-análisis-dinámico-de-la-aplicación)  
+9.  [Interpretación de los resultados](#11-interpretación-de-los-resultados)
 
 ---
 ## 1. ¿Qué es MobSF?
@@ -34,6 +35,8 @@ Este repositorio documenta el proceso para realizar un análisis dinámico de la
 ## 2. Obtener InsecureBankv2
 
 **InsecureBankv2** es una aplicación vulnerable desarrollada con fines educativos para practicar análisis y explotación de fallos en apps móviles.
+
+Puedes descargar la [Guía de uso de InsecureBankvs desde aquí.](files/InsecureBankv2UsageGuide.pdf)
 
 ### Pasos:
 
@@ -135,9 +138,43 @@ Una vez instalado en tu equipo lánzalo desde el botón de `inicio` de tu SO.
 Selecciona `Personal use`. Veremos el siguiente aviso:
  
 ![](images/image7.png)
+
 ---
 
-## 7. Emular un dispositivo móvil
+## 7. Ejecutar Back-end InsecureBankv2
+
+InsecureBankv2 es una aplicación bancaria, por lo tanto tenemos:
+
+- Aplicación Bancaria **Servidor** (Back-end).
+- Aplicación Bancaria **Cliente**. En este caso APK para Android.
+
+En este punto vamos a levantar la aplicación del servidor.
+El desarrollador tiene creado un laboratorio en la carpeta `AndroLabServer`. En esencia vamos a:
+- Instalar python (si no lo tienes instalado) y librerias de python.
+- Ejecutar la aplicación.
+
+```bash
+cd AndroLabServer/
+sudo apt install python
+pip install -r requirements.txt
+```
+![](images/image15.png)
+
+Aquí vemos cómo se ha instalado correctamente.
+
+![](images/image16.png)
+
+
+cd Andro
+```
+
+![](images/image7.png)
+![](images/image7.png)
+![](images/image7.png)
+
+---
+  
+## 8. Emular un dispositivo móvil
 
 
 1. Crea una nueva máquina virtual Android (preferiblemente Android 7.0 o superior con ARM o x86).
@@ -178,7 +215,7 @@ Nos aparece el dispositivo.
 
 ---
 
-## 8. Ejecutar InsecureBankv2 en el emulador
+## 9. Ejecutar InsecureBankv2 en el emulador
 
 1. Instalamos la aplicación en el emulador arrastrando el paquete de la aplicación sobre el emulador:
 
@@ -190,7 +227,7 @@ Nos aparece el dispositivo.
 
 ---
 
-## 9. Análisis dinámico de la aplicación
+## 10. Análisis dinámico de la aplicación
 
 1. Accede a MobSF en `http://localhost:8000`.
 2. Selecciona la opción **Dynamic Analyzer**.
@@ -202,7 +239,7 @@ Nos aparece el dispositivo.
 
 ---
 
-## 9. Interpretación de los resultados
+## 11. Interpretación de los resultados
 
 El informe dinámico incluirá información como:
 
@@ -219,6 +256,8 @@ El informe dinámico incluirá información como:
 - [MobSF Documentation](https://mobsf.github.io/docs/)
 - [Genymotion User Guide](https://docs.genymotion.com/)
 - [InsecureBankv2 GitHub](https://github.com/dineshshetty/Android-InsecureBankv2)
+- [Guía de uso de InsecureBankvs desde aquí.](files/InsecureBankv2UsageGuide.pdf)
+- [Manual de uso de Genymotio de Rafa López](files/InstalacionGenymotion.pdf)
 
 ---
 
