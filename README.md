@@ -148,6 +148,7 @@ InsecureBankv2 es una aplicación bancaria, por lo tanto tenemos:
 - Aplicación Bancaria **Servidor** (Back-end).
 - Aplicación Bancaria **Cliente**. En este caso APK para Android.
 
+
 En este punto vamos a levantar la aplicación del servidor.
 
 El desarrollador tiene creado un laboratorio en la carpeta `AndroLabServer`. En esencia vamos a:
@@ -156,42 +157,65 @@ El desarrollador tiene creado un laboratorio en la carpeta `AndroLabServer`. En 
 - Instalar python (si no lo tienes instalado) y librerias de python.
 - Ejecutar la aplicación.
 
-### Crear entornbo virtual de python
+La aplicación está escrito en Python 2.7, por lo que si tines instalado Python3 no se ejecutará correctamente.
+Los módulos necesarios para arrancar la aplicación ya no vienen en los Linux modernos, sólo los incorpora hasta Ubuntu 22.04 LTS.
 
-```bash
-cd AndroLabServer/
-python3 -m venv insecureBank-env
-source insecureBank-env/bin/activate
-```
-Esto nos crea una carpeta con el entorno virtual y entramos en él, como podemos ver en la imagen:
+Para comprobar la versión de python que tenemos probamos con:
 
-![](images/image17.png)
+![](images/image19.png)
 
-Instalamos la librerías:
+Como vemos en la imagen sólo nos detecta Python3. Al intentar ejecutar la aplicación nos da un error propio de que la función `print()` ha cambiado de `python2` a `python3`.
+
+### Opción 1. Tienes instalado Python2
+
+ Instalamos la librerías:
 
 ```bash
 pip install -r requirements.txt
 ```
+
 ![](images/image15.png)
 
 Aquí vemos cómo se ha instalado correctamente.
 
 ![](images/image16.png)
 
+```bash
+phyton app.py
+```
+### Opcion 2. Tienes instalado Python 3 :Instalación de Python2.7 y librerías necesarias.
 
-cd Andro
+Instalamos Python2 y las librerías necesarias.
+
+```bash
+sudo apt install python2
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+sudo python2 get-pip.py
+pip2 install flask
+pip2 install flask-sqlalchemy
+pip2 install simplejson
+pip2 install cherrypy
+pip2 install web.py==0.51
+pip2 install web.py
+```
+![](images/image18.png)
+
+
+ E iniciamos el servidor:
+
+
+```bash
+ python2 app.py
 ```
 
-![](images/image7.png)
-![](images/image7.png)
-![](images/image7.png)
+![](images/image17.png)
 
 ---
   
 ## 8. Emular un dispositivo móvil
 
 
-1. Crea una nueva máquina virtual Android (preferiblemente Android 7.0 o superior con ARM o x86).
+1. Crea una nueva máquina virtual Android (preferiblemente Android 5.0 con x86).
  
 ![](images/image8.png)
 
