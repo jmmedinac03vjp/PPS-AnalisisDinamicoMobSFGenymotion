@@ -102,29 +102,91 @@ Verás la interfaz web de MobSF, lista para analizar APKs.
 
 ## 6. Instalar Genymotion
 
-1. Regístrate en [Genymotion](https://www.genymotion.com/account/create/).
-2. Descarga la versión para tu sistema operativo.
-3. Instálalo y, si es necesario, también VirtualBox.
+> Puedes descargar un documento de cómo descargar y crear un dispositivo virtual en [este documento de Rafael López García](files/InstalacionGenymotion.pdf).
+
+1. Regístrate en [Genymotion](https://www.genymotion.com/account/create/). Deberás confirmar con el enlace enviado a tu correo electrónico
+	
+> En la versión gratuita nos ofrecen una versión trial de 30 días.
+
+2. Descarga la versión para tu sistema operativo. En mi caso en `Linux` he descargado el archivo ` .run`.
+
+![](images/image4.png)
+
+3. Instálalo. En mi caso lo he copiado e instalado en la carpeta `/opt`:
+
+```bash
+sudo cp genymotion-3.9.0-linux_x64.run /opt/
+sudo chmod 755 genymotion-3.9.0-linux_x64.run 
+sudo ./genymotion-3.9.0-linux_x64.run 
+```
+Una vez instalado en tu equipo lánzalo desde el botón de `inicio` de tu SO.
+
+![](images/image5.png)
+
+> Si es necesario, puedes usarlo en Máquina Virtual.
+
 4. Inicia sesión con tu cuenta de Genymotion.
 
+![](images/image6.png)
+
+
+> Si no te has registrado, tendrás que hacerlo en este momento para acceder a la aplicación.
+
+Selecciona `Personal use`. Veremos el siguiente aviso:
+ 
+![](images/image7.png)
 ---
 
 ## 7. Emular un dispositivo móvil
 
+
 1. Crea una nueva máquina virtual Android (preferiblemente Android 7.0 o superior con ARM o x86).
+ 
+![](images/image8.png)
+
+En los siguientes pasos podemos dejar todas las opciones tal y como están, salvo cambiarle el nombre al dispositivo, la versión de Android a la que nos interese e instalarle el teclado virutal. Aunque la opción “Enable Root Access” aparece desactivada, en principio sí que tendremos acceso de root.
+- Seleccionamos un teléfono básico `Custom Phone`
+
+![](images/image9.png)
+
+- Cambiamos la versión de Android, seleccionando `Android 5`.
+
+![](images/image10.png)
+
+- Habilitamos teclado virtual en pantalla.
+
+![](images/image11.png)
+
+Al finalizar el proceso y darle a `Install` comenzará la creación del dispositivo. Tarda unos minutos.
+
+- Iniciar el dispositivo. Darle al símbolo de `play`.
+
+![](images/image12.png)
+
+Nos aparece el dispositivo.
+
+![](images/image13.png)
+
+> 
+
+
+
 2. Asegúrate de que tenga habilitado **ADB**.
+![](images/image8.png)
+
 3. Inicia la máquina virtual.
 
 ---
 
 ## 8. Ejecutar InsecureBankv2 en el emulador
 
-1. Usa `adb` para instalar el APK en el emulador:
-```bash
-adb install InsecureBankv2.apk
-```
+1. Instalamos la aplicación en el emulador arrastrando el paquete de la aplicación sobre el emulador:
 
-2. Verifica que la app aparece en el emulador y se puede abrir correctamente.
+![](images/image14.png)
+
+2. Finalizada la instalación vemos cómo nos aparece la ventana de login.
+
+![](images/image15.png)
 
 ---
 
