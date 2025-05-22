@@ -13,8 +13,9 @@ Este repositorio documenta el proceso para realizar un análisis dinámico de la
 7. [Emular un dispositivo móvil](#7-emular-un-dispositivo-móvil)  
 8. [Ejecutar Back-end InsecureBankv2](#8-ejecutar-back-end-insecurebankv2)  
 8. [Ejecutar InsecureBankv2 en el emulador](#9-ejecutar-insecurebankv2-en-el-emulador)  
-9. [Análisis dinámico de la aplicación](#10-análisis-dinámico-de-la-aplicación)  
-9.  [Interpretación de los resultados](#11-interpretación-de-los-resultados)
+9. [Poner en marcha el laboratorio](#10-poner-en-marcha-el-laboratorio)
+9. [Análisis dinámico de la aplicación](#11-análisis-dinámico-de-la-aplicación)  
+9.  [Interpretación de los resultados](#12-interpretación-de-los-resultados)
 
 ---
 ## 1. ¿Qué es MobSF?
@@ -61,18 +62,41 @@ Puedes ejecutar MobSF localmente utilizando Docker o de forma manual. A continua
 git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
 cd Mobile-Security-Framework-MobSF
 docker build -t mobsf .
-docker run -it -p 8000:8000 mobsf
+docker run -it -p 8000:8000 --name LabMobSF mobsf
 ```
 
 También puedes hacerlo directamente  levantando la imagen de dockerhub:
 
 ```bash
-docker run -it --rm -e MOBSF_ANALYZER_IDENTIFIER=10.0.4.20:5555 -p 8080:8000 opensecurity/mobile-security-framework-mobsf:latest
+docker run -it --rm  -p 8080:8000 --name MobSFopensecurity/mobile-security-framework-mobsf:latest
 ```
-
+**Explicación de los parámetros**
+- `--rm` Borramos las anteriores instancias de docker que se hayan ejecutado antes. Así no nos dá problema si hay alguna configuración anterior.
+- `-it` Ejecutamos contenedor de forma interactiva. La máquina arrancará y quedará el terminal abierto. Así podremos ver los logs que van surgiendo en el contenedor.
+- `-p 8000:8000` Redireccion de puertos. MobSF muestra su web por el puerto 8000. Nosotros lo redirigimos para que podamos acceder a él por el puerto 8000 de nuestra máquina anfitriona. Si quisiéramos verlo por el 8080 de nuestra máquina anfitriona por que estuviera ocupado el 8000, pondríamos `-p 8080:8000.
+- `opensecurity/mobile-security-framework-mobsf:latest` La imagen docker que vamos a utilizar. Es del usuario `opensecurity` de `Hub.Docker.com` 
+- `--name LabMobSF` es el nombre que queremos que tenga el contenedor docker.
 ![](images/image1.png)
 
-Como hemos creado un contenedor interactivo, `docker run -it`, el terminal quedará abierto. En él podremos ver
+De esta forma podemos levantar nuestro contenedor `MobSF` para realizar **análisis estáticos de código**. Si lo que deseamos hacer es un **análisis dinámico de código** necesitamos usar otro parámetro:
+- `-e MOBSF_ANALYZER_IDENTIFIER=X.X.X.X:5555` Es el puerto por que se comunicará `ADB` con el emulador de la aplicación Android, donde X.X.X.X es la dirección IP del dispositivo virtual.
+
+Luego levantaremos todo  el laboratorio por lo que puedes eliminar el contenedor:
+
+```bash
+docker ps
+```
+
+![](images/image34.png)
+
+Nos muestra información de los contenedores levantados. Vemos como tenemos activo nuestro contenedor `LabMobSF`
+
+Si queremos eliminar el contenedor:
+
+```bash
+docker rm -f LabMobSF
+```
+
 
 ### Opción 2: Instalación manual
 
@@ -320,14 +344,46 @@ Si lo hemos creado en nuestro equipo tan sólo tenemos que ver la ip de nuestro 
 
 ![](images/image21.png)
 
-Después de darle al botón de `Start` accedemos a la aplicación:
+Después de darle al botón de `Submit` accedemos a la aplicación:
 
 ![](images/image22.png)
 
+En cualquier momento podemos cambiar los datos del servidor dándole a los tres puntos, en el apartado de `Preferencias`
+
+![](images/image36.png)
 
 ---
+## 10. Poner en marcha el laboratorio
 
-## 10. Análisis dinámico de la aplicación
+1. Lanza la ejecución del servidor de `InsecureBank`
+Colocado en la carpeta `AndroLabServer`
+
+```bash
+phyton2 app.py
+# Si no tienes python3 será python en vez de phyton2
+#phyton app.py
+```
+
+1. Abre el emulador `Genymotion`
+1. Inicia el dispositivo virtual que hemos creado en `Genymotion` 
+1. Anota la dirección Ip que coge el dispositivo virtual
+![](images/image35.png)
+En este caso es la 192.168.1.137. ¡¡¡OJO¡¡ que esta ip no tiene que ser siempre la misma en diferentes ejecuciones.
+1. Ejecuta la aplicación `InsecureBank` en el navegador. Si la tienes instalada anteriormente tan sólo tienes que buscarla en el dispositivo virtual, y sino, arrastra la apk sobre el emulador.
+1. Introduce usuario y contraseña `jack` y `jack@123$`
+1. Lo siguiente es poner la ip de la máquina donde se ejecuta el servidor de `InsecureBank`.Recuerda que lo puedes hacer en `Preferencias` de la APP. En nuestro caso la ip de nuestra máquina anfitriona. El puerto si no lo hemos cambiado sigue siendo `8888`  
+1. Levanta MobSF: !!!OJO¡¡¡ que tendrás que cambiar la ip asociada a la variable `MOBSF_ANALYZER_IDENTIFIER`, en el comando docker de abajo.
+
+```bash
+docker run -it --rm -e MOBSF_ANALYZER_IDENTIFIER=192.168.1.137:5555 -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
+```
+
+1. Accede a `MobSF`
+
+<http://localhost:8080/>
+
+---
+## 11. Análisis dinámico de la aplicación
 
 1. Accede a MobSF en `http://localhost:8000`.
 
@@ -339,17 +395,33 @@ Después de darle al botón de `Start` accedemos a la aplicación:
  
 3. Selecciona la opción **Dynamic Analyzer**.
 
+![](images/image37.png)
+
 3. Asegúrate de que MobSF detecta el dispositivo emulado vía ADB.
 
 4. Carga el APK de InsecureBankv2.
+
+Vemos como esta conectado correctamente con nuestro dispositivo virtual.
+
+![](images/image38.png)
+
+1. Vemos las aplicaciones detectadas por el analizador dinámico.
+Como nos interesa MobSF, pulsamos en ella en `Iniciar Análisis dinámico` 
+
+![](images/image39.png)
 
 5. Sigue las instrucciones para iniciar el análisis dinámico.
 
 > MobSF lanzará la app en el emulador y empezará a registrar comportamiento, tráfico, uso de permisos, etc.
 
----
+![](images/image41.png)
 
-## 11. Interpretación de los resultados
+-
+
+
+--
+
+## 12. Interpretación de los resultados
 
 El informe dinámico incluirá información como:
 
@@ -360,6 +432,76 @@ El informe dinámico incluirá información como:
 - **Captura de tráfico HTTPS (si está configurado con proxy o CA)**.
 
 ---
+## Ejercicios propuestos
+
+### 2. Ejercicio 1: Captura de credenciales
+
+1. Inicia sesión desde la app:
+   ```
+   Usuario: test
+   Contraseña: test123
+   ```
+2. Observa en MobSF:
+   - **Pestaña Network**: ¿Se transmiten credenciales en texto claro?
+   - **Logcat**: ¿Se imprimen datos sensibles en consola?
+
+---
+
+### 3. Ejercicio 2: Almacenamiento inseguro
+
+1. Completa acciones en la app (login, ver saldo, transferencias).
+2. En MobSF, ve a **"File System"** y revisa:
+   - `/data/data/com.android.insecurebankv2/`
+   - `/sdcard/`
+
+3. Busca archivos `.xml`, `.db`, `.txt` con datos sensibles.
+
+---
+
+### 4. Ejercicio 3: Análisis de tráfico HTTPS (opcional)
+
+1. Configura Burp Suite como proxy en el host.
+2. Ajusta el proxy del emulador Genymotion.
+3. Instala el certificado CA de Burp en el emulador.
+4. Navega por la app y captura tráfico cifrado.
+
+---
+
+### 5. Ejercicio 4: Análisis de APIs
+
+1. Interactúa con la app desde el emulador.
+2. Revisa la pestaña **API Monitor** en MobSF.
+3. Copia URLs de API y prueba:
+   - Inyección SQL
+   - Fuzzing de parámetros
+   - Peticiones sin autenticación
+
+---
+
+### 6. Ejercicio 5: Comunicación entre componentes
+
+1. Lanza una Activity manualmente con ADB:
+   ```bash
+   adb shell am start -n com.android.insecurebankv2/.SomeActivity
+   ```
+
+2. Revisa si se puede acceder a componentes protegidos.
+3. Revisa el informe de ICC en MobSF.
+
+---
+
+### 7. Conclusión
+
+Anota vulnerabilidades encontradas y qué controles de seguridad faltan.
+
+### Preguntas guía:
+- ¿Qué datos se almacenan sin cifrar?
+- ¿Hay tráfico HTTP inseguro?
+- ¿Qué endpoints carecen de autenticación o validación?
+- ¿Se pueden explotar componentes internos de la app?
+
+---
+
 
 ## 📘 Recursos adicionales
 
