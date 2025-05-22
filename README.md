@@ -10,7 +10,7 @@ Este repositorio documenta el proceso para realizar un análisis dinámico de la
 4. [Acceder a MobSF](#4-Acceder-a-mobsf)  
 5. [¿Qué es Genymotion?](#5-qué-es-genymotion)  
 6. [Instalar Genymotion](#6-instalar-genymotion)  
-7. [Emular un dispositivo móvil](#7-emular-un-dispositivo-móvil)  
+7. [Emular un dispositivo móvil](#7-emular-un-dispositivo-móvil-en-genymotion)  
 8. [Ejecutar Back-end InsecureBankv2](#8-ejecutar-back-end-insecurebankv2)  
 8. [Ejecutar InsecureBankv2 en el emulador](#9-ejecutar-insecurebankv2-en-el-emulador)  
 9. [Poner en marcha el laboratorio](#10-poner-en-marcha-el-laboratorio)
