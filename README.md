@@ -178,7 +178,78 @@ La aplicación se reiniciará y nos aparece la pantalla de la aplicación
 
 ---
 
-## 7. Ejecutar Back-end InsecureBankv2
+## 7. Emular un dispositivo móvil en Genymotion
+
+1. Arrancamos Genymotion en nuestro Sistema operativo.
+
+2. Crea una nueva máquina virtual Android (preferiblemente Android 5.0 con x86).
+ 
+![](images/image8.png)
+
+En los siguientes pasos podemos dejar todas las opciones tal y como están, salvo cambiarle el nombre al dispositivo, la versión de Android a la que nos interese e instalarle el teclado virutal. Aunque la opción “Enable Root Access” aparece desactivada, en principio sí que tendremos acceso de root.
+- Seleccionamos un teléfono básico `Custom Phone`
+
+![](images/image9.png)
+
+- Cambiamos la versión de Android, seleccionando `Android 5`.
+
+![](images/image10.png)
+
+- Habilitamos teclado virtual en pantalla.
+
+![](images/image11.png)
+
+- !!IMPORTANTE¡¡ En la sección de "Hypervisor Options", configuramos la red del dispositivo en modo `Bridge`. Debemos seleccionar también la interfaz que estamos utilizando (wl0 para inalámbrica, en0 para cableada). 
+
+- Al finalizar el proceso y darle a `Install` comenzará la creación del dispositivo. Tarda unos minutos.
+
+3. Iniciar el dispositivo. Darle al símbolo de `play`.
+
+![](images/image12.png)
+
+Nos aparece el dispositivo.
+
+![](images/image13.png)
+
+### Comprobar conexión con dispositivo.
+
+Para ver si hay conexión con el dispositivo creado:
+
+1. Ver ip del dispositivo virtual. 
+- Entramos en `Settings` o `Ajustes`
+
+![](images/image28.png)
+
+- Entramos en seccion `WIFI`
+
+![](images/image29.png)
+
+- Le damos a los tres puntos 
+
+![](images/image30.png)
+
+- Y finalmente en `Advanced` o `Avanzado`
+
+![](images/image31.png)
+
+Ya podremos ver los datos de la conexión: 
+
+![](images/image32.png)
+
+2. Probar conexión con ADB.
+
+Para ver si nuestro equipo anfitrión conecta con el dispositivo virtual, desde el terminal de nuestro equipo:
+
+```bash
+adb connect X.X.X.X:5555
+```
+Siendo X.X.X.X la ip de nuestro dispositivo virtual. Si se establece la conexión aparecerá un mesnaje de `conected to X.X.X.X`
+
+![](images/image33.png)
+
+---
+
+## 8. Ejecutar Back-end InsecureBankv2
 
 InsecureBankv2 es una aplicación bancaria, por lo tanto tenemos:
 
@@ -249,76 +320,6 @@ pip2 install web.py
 
 ---
   
-## 8. Emular un dispositivo móvil en Genymotion
-
-1. Arrancamos Genymotion en nuestro Sistema operativo.
-
-2. Crea una nueva máquina virtual Android (preferiblemente Android 5.0 con x86).
- 
-![](images/image8.png)
-
-En los siguientes pasos podemos dejar todas las opciones tal y como están, salvo cambiarle el nombre al dispositivo, la versión de Android a la que nos interese e instalarle el teclado virutal. Aunque la opción “Enable Root Access” aparece desactivada, en principio sí que tendremos acceso de root.
-- Seleccionamos un teléfono básico `Custom Phone`
-
-![](images/image9.png)
-
-- Cambiamos la versión de Android, seleccionando `Android 5`.
-
-![](images/image10.png)
-
-- Habilitamos teclado virtual en pantalla.
-
-![](images/image11.png)
-
-- !!IMPORTANTE¡¡ En la sección de "Hypervisor Options", configuramos la red del dispositivo en modo `Bridge`. Debemos seleccionar también la interfaz que estamos utilizando (wl0 para inalámbrica, en0 para cableada). 
-
-- Al finalizar el proceso y darle a `Install` comenzará la creación del dispositivo. Tarda unos minutos.
-
-3. Iniciar el dispositivo. Darle al símbolo de `play`.
-
-![](images/image12.png)
-
-Nos aparece el dispositivo.
-
-![](images/image13.png)
-
-### Comprobar conexión con dispositivo.
-
-Para ver si hay conexión con el dispositivo creado:
-
-1. Ver ip del dispositivo virtual. 
-- Entramos en `Settings` o `Ajustes`
-
-![](images/image28.png)
-
-- Entramos en seccion `WIFI`
-
-![](images/image29.png)
-
-- Le damos a los tres puntos 
-
-![](images/image30.png)
-
-- Y finalmente en `Advanced` o `Avanzado`
-
-![](images/image31.png)
-
-Ya podremos ver los datos de la conexión: 
-
-![](images/image32.png)
-
-2. Probar conexión con ADB.
-
-Para ver si nuestro equipo anfitrión conecta con el dispositivo virtual, desde el terminal de nuestro equipo:
-
-```bash
-adb connect X.X.X.X:5555
-```
-Siendo X.X.X.X la ip de nuestro dispositivo virtual. Si se establece la conexión aparecerá un mesnaje de `conected to X.X.X.X`
-
-![](images/image33.png)
-
----
 
 ## 9. Ejecutar InsecureBankv2 en el emulador
 
